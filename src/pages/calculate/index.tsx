@@ -11,21 +11,13 @@ export default class Index extends Component {
       current: 1,
     }
   }
-  handleClick (value) {
-    this.setState({
-      current: value
-    })
-    if(value === 0){
-      // 搜索
-      Taro.reLaunch({
-        url: '/pages/index/index'
-      })
-    }
-  }
+  
   render () {
+    var value = Taro.getStorageSync('dataSource')
+    console.log(value)
     return (
       <View className='index'>
-        123
+        156
       </View>
     )
   }

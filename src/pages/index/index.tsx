@@ -310,8 +310,8 @@ export default class Index extends Component {
           dataSource={this.state.searchDataSource}
           rowKey="title"
           scroll={{
-            x: '100vw',
-            y: 400,ij
+            x: '100vw', 
+            y: 400,
           }}
         />}
       </View>

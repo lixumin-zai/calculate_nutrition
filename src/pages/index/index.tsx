@@ -312,7 +312,7 @@ export default class Index extends Component {
           scroll={{
             x: '100vw', 
             y: 400,
-          }}
+          }} 
         />}
       </View>
     )

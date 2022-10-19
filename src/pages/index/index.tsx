@@ -311,8 +311,8 @@ export default class Index extends Component {
           rowKey="title" 
           scroll={{
             x: '100vw', 
-            y: 400,
-          }} 
+            y: 400, 
+          }}
         />}
       </View>
     )

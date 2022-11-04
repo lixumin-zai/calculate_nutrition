@@ -1,19 +1,19 @@
-import { Component } from 'react'
+import { Component, useEffect } from 'react'
 import { View, Text, Button } from '@tarojs/components';
 import './index.scss'
 import Table from 'taro3-table'
-import { AtSearchBar, AtTabBar, AtButton } from 'taro-ui'
+import { AtSearchBar, AtTabBar, AtButton, AtToast } from 'taro-ui'
 import Taro from '@tarojs/taro'
 
 export default class Index extends Component {
-
-  constructor() {
-    super(...arguments)
+  constructor(props) {
+    super(props);
     this.state = {
       value: '',
       current: 0,
       isShow: false,
       result: '',
+      showToast: false,
       columns: [
         {
           title: '名称',
@@ -239,25 +239,32 @@ export default class Index extends Component {
             // console.log(status)
             // console.log(index)
             // console.log(text)
-            return <AtButton type={status ? 'primary' : 'secondary'} size='small' circle full onClick={this.buttonOnClick.bind(this, status, index)}>{status ? '添加' : '删除'}</AtButton>;
+            return <AtButton type='primary' size='small' circle full onClick={this.buttonOnClick.bind(this, data)}>添加</AtButton>;
             // <Button type={t ? 'default' : 'warn'} size="mini">{t ? '启用' : '禁用'}</Button>;
           },
         }
       ],
       searchDataSource: [],
-      selectDataSource: []
+      selectDataSource2: []
     }
   }
-  buttonOnClick(status, index){
-    var dataSource = this.state.searchDataSource
-    dataSource[index].status = status ? 0 : 1
+
+  buttonOnClick(data){
+    let dataSource = this.state.selectDataSource2.push(data)
     this.setState({
-      dataSource: dataSource
+      selectDataSource: dataSource,
+      showToast: true
     })
-    
+    // Taro.getStorage({
+    //   key: 'dataSource',
+    //   success : (res) => {
+    //     console.log(res.data);
+    //     if(res.data.filter(item => item !== data)===res.data){
+        
+    //   }}})
     Taro.setStorage({
       key: "dataSource",
-      data: this.state.dataSource
+      data: this.state.selectDataSource2
     })
   }
   onChange(value) {
@@ -267,7 +274,7 @@ export default class Index extends Component {
   }
   onActionClick(){
     Taro.request({
-      url: 'http://192.168.137.1:8000/search/?search_data=' + this.state.value
+      url: 'http://192.168.31.148:8000/search/?search_data=' + this.state.value
     }).then(res => {
       // console.log(123)
       // console.log(res.data)
@@ -295,10 +302,16 @@ export default class Index extends Component {
       }
     })
   }
-
+  onCloseToast(){
+    this.setState({
+      showToast: false
+    })
+  }
   render() {
+    
     return (
       <View className='index'>
+        
         <AtSearchBar
           value={this.state.value}
           onChange={this.onChange.bind(this)}
@@ -314,6 +327,7 @@ export default class Index extends Component {
             y: 400, 
           }}
         />}
+        <AtToast isOpened={this.state.showToast} text="成功" status='success' duration={100} onClose={this.onCloseToast.bind(this)}></AtToast>
       </View>
     )
   }

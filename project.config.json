@@ -2,12 +2,14 @@
   "miniprogramRoot": "./dist",
   "projectname": "myapp",
   "description": "1",
-  "appid": "wx9831038f10c2276b",
+  "appid": "wxc100730730d375c8",
   "setting": {
     "urlCheck": true,
     "es6": false,
     "postcss": false,
-    "minified": false
+    "minified": false,
+    "ignoreDevUnusedFiles": false ,
+    "ignoreUploadUnusedFiles": false
   },
   "compileType": "miniprogram"
 }
